@@ -1,0 +1,41 @@
+[
+    {
+        "id": 1,
+        "title": "For loop error",
+        "description": "The for loop is starting from 1 and not from 0",
+        "expected": "The for loop must start from 0.",
+        "current": "The for loop is set to start from 1.",
+        "files": "forbug.py",
+        "difficulty": "easy",
+        "points": 5,
+        "steps": "1. Set the i=0 as the initial state",
+        "hints": "I need to start the for loop from 0",
+        "solution": "Change the initialization of i from i=1 to i=0'"
+    },
+    {
+        "id": 2,
+        "title": "Wrong tax bracket comparison",
+        "description": "The tax calculation uses wrong comparison operator for income threshold",
+        "expected": "Income of exactly 50000 should be taxed at 30% (high bracket).",
+        "current": "Income of exactly 50000 is taxed at 20% (low bracket) because of > instead of >=.",
+        "files": "forbug.py",
+        "difficulty": "medium",
+        "points": 10,
+        "steps": "1. Change the comparison operator from > to >= in calculate_tax function",
+        "hints": "Check the comparison operator on line where income is compared to 50000",
+        "solution": "Change 'if income > 50000:' to 'if income >= 50000:'"
+    },
+    {
+        "id": 3,
+        "title": "Missing f-string formatter",
+        "description": "The currency formatting function is not using f-string, so variable is not interpolated",
+        "expected": "The function should return 'Total: $1234.56' when amount is 1234.56.",
+        "current": "The function returns 'Total: ${amount}' literally without interpolation.",
+        "files": "forbug.py",
+        "difficulty": "easy",
+        "points": 5,
+        "steps": "1. Add f prefix to the string to make it an f-string",
+        "hints": "Python f-strings need the f prefix before the opening quote",
+        "solution": "Change 'return \"Total: ${amount}\"' to 'return f\"Total: ${amount}\"'"
+    }
+]
