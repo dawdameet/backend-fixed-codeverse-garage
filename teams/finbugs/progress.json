@@ -1,0 +1,224 @@
+{
+  "team_id": "finbugs",
+  "total_submissions": 7,
+  "verified_submissions": 6,
+  "total_points": 50,
+  "last_submission": "2025-11-07T01:37:47.082321",
+  "submissions": [
+    {
+      "team_id": "finbugs",
+      "bug_id": 4,
+      "domain": "fintech",
+      "commit_hash": "7d08c4223b69f8f9258b0003d057bbbd7b026a94",
+      "commit_message": "fix #4",
+      "submission_time": "2025-11-07T01:20:33.096170",
+      "status": "submitted",
+      "verified": true,
+      "points": 0,
+      "code_changes": [
+        {
+          "filename": "market_sentiment/sentiment_analyzer.py",
+          "changes": [
+            {
+              "added": [],
+              "removed": [
+                "            headlines = [title] * len(headlines)"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\n  \"BUG4\": \"true\"\n}",
+      "llm_verified": true,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "finbugs",
+      "bug_id": 3,
+      "domain": "fintech",
+      "commit_hash": "968259b748c14bfa19cda967bb836face8d79172",
+      "commit_message": "fix #3",
+      "submission_time": "2025-11-07T01:22:52.867950",
+      "status": "submitted",
+      "verified": true,
+      "points": 15,
+      "code_changes": [
+        {
+          "filename": "market_sentiment/sentiment_analyzer.py",
+          "changes": [
+            {
+              "added": [
+                "        text = re.sub(r'[^A-Za-z\\\\s]', '', text)"
+              ],
+              "removed": [
+                "        text = re.sub(r'[^A-Za-z]', '', text)"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\"BUG3\": \"true\"}",
+      "llm_verified": true,
+      "verification_method": "deterministic"
+    },
+    {
+      "team_id": "finbugs",
+      "bug_id": 7,
+      "domain": "fintech",
+      "commit_hash": "a65944610b4920cf16216b485a3975d01a534e81",
+      "commit_message": "fix #7",
+      "submission_time": "2025-11-07T01:37:47.082321",
+      "status": "submitted",
+      "verified": true,
+      "points": 15,
+      "code_changes": [
+        {
+          "filename": "portfolio/optimizer.py",
+          "changes": [
+            {
+              "added": [
+                "            weights /= np.sum(weights)"
+              ],
+              "removed": [
+                "            weights /= n_assets"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\n  \"BUG7\": \"true\"\n}",
+      "llm_verified": true,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "finbugs",
+      "bug_id": 5,
+      "domain": "fintech",
+      "commit_hash": "d3bdff3e95795cc87ad52710f8b6a5f3851cd24e",
+      "commit_message": "fix #5",
+      "submission_time": "2025-11-07T01:33:47.051296",
+      "status": "submitted",
+      "verified": true,
+      "points": 5,
+      "code_changes": [
+        {
+          "filename": "market_sentiment/sentiment_analyzer.py",
+          "changes": [
+            {
+              "added": [
+                "            all_words.extend([w for w in words if w in stop_words and len(w) > 3])"
+              ],
+              "removed": [
+                "            all_words.extend([w for w in words if w in  stop_words and len(w) > 3])"
+              ]
+            }
+          ]
+        },
+        {
+          "filename": "portfolio/optimizer.py",
+          "changes": [
+            {
+              "added": [
+                "        var_historical = np.percentile(portfolio_returns, (1-confidence_level)*100)"
+              ],
+              "removed": [
+                "        var_historical = np.percentile(portfolio_returns, confidence_level*100)"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\n  \"BUG5\": \"true\"\n}",
+      "llm_verified": true,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "finbugs",
+      "bug_id": 1,
+      "domain": "fintech",
+      "commit_hash": "3d0912f0c7c1c2717feb85288d02caee00a4d060",
+      "commit_message": "fix #1",
+      "submission_time": "2025-11-07T01:21:18.380192",
+      "status": "submitted",
+      "verified": true,
+      "points": 5,
+      "code_changes": [
+        {
+          "filename": "market_sentiment/sentiment_analyzer.py",
+          "changes": [
+            {
+              "added": [
+                "        if compound >= 0.5:"
+              ],
+              "removed": [
+                "        if compound >= 0.05:"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\"BUG1\": \"true\"}",
+      "llm_verified": true,
+      "verification_method": "deterministic"
+    },
+    {
+      "team_id": "finbugs",
+      "bug_id": 6,
+      "domain": "fintech",
+      "commit_hash": "c005baba8c59984cb36dcba583bf6e8967a9284f",
+      "commit_message": "fix #6",
+      "submission_time": "2025-11-07T01:35:02.314810",
+      "status": "submitted",
+      "verified": false,
+      "points": 0,
+      "code_changes": [
+        {
+          "filename": "portfolio/optimizer.py",
+          "changes": [
+            {
+              "added": [
+                "            np.dot(weights.T,np.dot(self.returns.cov(), weights))"
+              ],
+              "removed": [
+                "            np.dot(weights.T, np.dot(self.returns.cov(), weights))"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\"BUG6\": \"false\"}",
+      "llm_verified": false,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "finbugs",
+      "bug_id": 2,
+      "domain": "fintech",
+      "commit_hash": "d2d7867e2eac497a26001ad2d0759e45365df552",
+      "commit_message": "fix #2",
+      "submission_time": "2025-11-07T01:23:41.816036",
+      "status": "submitted",
+      "verified": true,
+      "points": 10,
+      "code_changes": [
+        {
+          "filename": "market_sentiment/sentiment_analyzer.py",
+          "changes": [
+            {
+              "added": [
+                "            all_words.extend([w for w in words if w in  stop_words and len(w) > 3])"
+              ],
+              "removed": [
+                "            all_words.extend([w for w in words if w in stop_words and len(w) > 3])"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\"BUG2\": \"true\"}",
+      "llm_verified": true,
+      "verification_method": "deterministic"
+    }
+  ],
+  "domain": "fintech"
+}

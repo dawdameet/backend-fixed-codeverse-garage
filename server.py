@@ -8,10 +8,8 @@ from pydantic import BaseModel
 import httpx
 import json
 import re
-from deterministic_verifier import DeterministicVerifier
 
 app = FastAPI()
-deterministic_verifier = DeterministicVerifier()
 
 # Add CORS middleware
 app.add_middleware(
@@ -62,7 +60,7 @@ class VerifyRequest(BaseModel):
 
 @app.post("/verify")
 async def verify_bug_fix(request: VerifyRequest):
-    """Verify a bug fix using deterministic rules first, then LLM if needed"""
+    """Verify a bug fix using LLM"""
     if not GEMINI_API_KEY:
         raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
 
@@ -72,19 +70,7 @@ async def verify_bug_fix(request: VerifyRequest):
     except json.JSONDecodeError:
         parsed_diff = {"raw": request.bug_diff_json}
     
-    # Try deterministic verification first
-    deterministic_result = deterministic_verifier.verify_bug_fix(
-        request.bugs_doc, parsed_diff, request.bug_to_check
-    )
-    
-    if deterministic_result is not None:
-        result_str = "true" if deterministic_result else "false"
-        return {
-            "verification_result": json.dumps({request.bug_to_check: result_str}),
-            "method": "deterministic"
-        }
-    
-    # Fallback to LLM verification
+    # Use LLM verification
     try:
         pretty_diff = json.dumps(parsed_diff, indent=2)
     except:

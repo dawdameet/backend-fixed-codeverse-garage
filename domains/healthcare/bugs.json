@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "title": "Wrong fever threshold comparison",
+        "description": "The fever check uses <= instead of < for the threshold, causing 100.4°F to be classified as normal when it should be fever",
+        "expected": "Temperature of 100.4°F should return 'Fever detected'.",
+        "current": "Temperature of 100.4°F returns 'Normal' due to <= operator.",
+        "files": "patient_system.py",
+        "difficulty": "easy",
+        "points": 5,
+        "steps": "1. Change the comparison operator from <= to < in check_fever function",
+        "hints": "A temperature of exactly 100.4°F is considered a fever, not normal",
+        "solution": "Change 'if temperature <= 100.4:' to 'if temperature < 100.4:'"
+    },
+    {
+        "id": 2,
+        "title": "Missing return statement in BMI calculation",
+        "description": "The calculate_bmi function calculates BMI but doesn't return the value",
+        "expected": "The function should return the calculated BMI value.",
+        "current": "The function calculates BMI but returns None instead of the value.",
+        "files": "patient_system.py",
+        "difficulty": "easy",
+        "points": 5,
+        "steps": "1. Add return statement after the BMI calculation",
+        "hints": "The function needs to return the bmi variable",
+        "solution": "Add 'return bmi' after the BMI calculation line"
+    },
+    {
+        "id": 3,
+        "title": "Wrong logical operator in emergency check",
+        "description": "Emergency check uses 'and' instead of 'or', requiring both conditions to be true",
+        "expected": "Either high heart rate OR high blood pressure should trigger emergency alert.",
+        "current": "Only triggers emergency when BOTH heart rate AND blood pressure are high.",
+        "files": "patient_system.py",
+        "difficulty": "easy",
+        "points": 5,
+        "steps": "1. Change the logical operator from 'and' to 'or' in check_emergency function",
+        "hints": "An emergency should be triggered if any vital sign is dangerously high",
+        "solution": "Change 'if heart_rate > 120 and blood_pressure > 180:' to 'if heart_rate > 120 or blood_pressure > 180:'"
+    },
+    {
+        "id": 4,
+        "title": "Age 64 not classified correctly",
+        "description": "The age group logic has a gap where age 64 is classified as Adult, but the Senior check starts at 65",
+        "expected": "Age 64 should be classified as 'Adult'.",
+        "current": "The logic is correct but inconsistent - should use > 64 instead of >= 65 for clarity.",
+        "files": "patient_system.py",
+        "difficulty": "easy",
+        "points": 5,
+        "steps": "1. Change the Senior age check from >= 65 to > 64 for consistency",
+        "hints": "Make the boundary checks consistent across all age groups",
+        "solution": "Change 'elif age >= 65:' to 'elif age > 64:'"
+    }
+]

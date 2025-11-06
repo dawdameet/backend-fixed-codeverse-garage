@@ -1,0 +1,42 @@
+{
+  "team_id": "finbugs",
+  "bug_id": 5,
+  "domain": "fintech",
+  "commit_hash": "d3bdff3e95795cc87ad52710f8b6a5f3851cd24e",
+  "commit_message": "fix #5",
+  "submission_time": "2025-11-07T01:33:47.051296",
+  "status": "submitted",
+  "verified": true,
+  "points": 5,
+  "code_changes": [
+    {
+      "filename": "market_sentiment/sentiment_analyzer.py",
+      "changes": [
+        {
+          "added": [
+            "            all_words.extend([w for w in words if w in stop_words and len(w) > 3])"
+          ],
+          "removed": [
+            "            all_words.extend([w for w in words if w in  stop_words and len(w) > 3])"
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "portfolio/optimizer.py",
+      "changes": [
+        {
+          "added": [
+            "        var_historical = np.percentile(portfolio_returns, (1-confidence_level)*100)"
+          ],
+          "removed": [
+            "        var_historical = np.percentile(portfolio_returns, confidence_level*100)"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\n  \"BUG5\": \"true\"\n}",
+  "llm_verified": true,
+  "verification_method": "llm"
+}

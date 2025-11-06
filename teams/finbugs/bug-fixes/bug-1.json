@@ -1,0 +1,29 @@
+{
+  "team_id": "finbugs",
+  "bug_id": 1,
+  "domain": "fintech",
+  "commit_hash": "3d0912f0c7c1c2717feb85288d02caee00a4d060",
+  "commit_message": "fix #1",
+  "submission_time": "2025-11-07T01:21:18.380192",
+  "status": "submitted",
+  "verified": true,
+  "points": 5,
+  "code_changes": [
+    {
+      "filename": "market_sentiment/sentiment_analyzer.py",
+      "changes": [
+        {
+          "added": [
+            "        if compound >= 0.5:"
+          ],
+          "removed": [
+            "        if compound >= 0.05:"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\"BUG1\": \"true\"}",
+  "llm_verified": true,
+  "verification_method": "deterministic"
+}

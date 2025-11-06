@@ -1,0 +1,29 @@
+{
+  "team_id": "finbugs",
+  "bug_id": 3,
+  "domain": "fintech",
+  "commit_hash": "968259b748c14bfa19cda967bb836face8d79172",
+  "commit_message": "fix #3",
+  "submission_time": "2025-11-07T01:22:52.867950",
+  "status": "submitted",
+  "verified": true,
+  "points": 15,
+  "code_changes": [
+    {
+      "filename": "market_sentiment/sentiment_analyzer.py",
+      "changes": [
+        {
+          "added": [
+            "        text = re.sub(r'[^A-Za-z\\\\s]', '', text)"
+          ],
+          "removed": [
+            "        text = re.sub(r'[^A-Za-z]', '', text)"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\"BUG3\": \"true\"}",
+  "llm_verified": true,
+  "verification_method": "deterministic"
+}
