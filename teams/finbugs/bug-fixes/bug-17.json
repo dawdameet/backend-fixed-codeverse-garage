@@ -2,28 +2,28 @@
   "team_id": "finbugs",
   "bug_id": 17,
   "domain": "fintech",
-  "commit_hash": "eb0df7e3a899e46df65b6a08c6a7435c773b4caf",
+  "commit_hash": "b83d164b95c44f71c0e9044af30948b1caaa758d",
   "commit_message": "fix #17",
-  "submission_time": "2025-11-07T11:54:13.198482",
+  "submission_time": "2025-11-07T18:11:50.557580",
   "status": "submitted",
-  "verified": true,
-  "points": 5,
+  "verified": false,
+  "points": 0,
   "code_changes": [
     {
       "filename": "cpp_services/pair_trading/backtest.cpp",
       "changes": [
         {
           "added": [
-            "            double tradePnl = ( entryPrice - exitPrice) / entryPrice; // PnL as %"
+            "            double tradePnl = (entryPrice - exitPrice) / entryPrice; // PnL as %"
           ],
           "removed": [
-            "            double tradePnl = (exitPrice - entryPrice) / entryPrice; // PnL as %"
+            "            double tradePnl = ( entryPrice - exitPrice) / entryPrice; // PnL as %"
           ]
         }
       ]
     }
   ],
-  "llm_verification": "{\n  \"BUG17\": \"true\"\n}",
-  "llm_verified": true,
+  "llm_verification": "{ \"BUG17\": \"false\" }",
+  "llm_verified": false,
   "verification_method": "llm"
 }

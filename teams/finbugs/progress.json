@@ -1,860 +1,95 @@
 {
   "team_id": "finbugs",
-  "total_submissions": 13,
-  "verified_submissions": 8,
-  "total_points": 50,
-  "last_submission": "2025-11-07T14:58:21.841350",
+  "total_submissions": 3,
+  "verified_submissions": 2,
+  "total_points": 15,
+  "last_submission": "2025-11-07T18:13:48.907701",
   "submissions": [
-    {
-      "team_id": "finbugs",
-      "bug_id": 16,
-      "domain": "fintech",
-      "commit_hash": "7dc7a75ce770cfbcc23973fb10ab2489caac4fbe",
-      "commit_message": "fix #16",
-      "submission_time": "2025-11-07T14:54:28.569680",
-      "status": "submitted",
-      "verified": true,
-      "points": 5,
-      "code_changes": [
-        {
-          "filename": "cpp_services/monte_carlo/monte_carlo.cpp",
-          "changes": [
-            {
-              "added": [
-                "    out << \"p5_final\"  << p5 << \"p995_final:\" << p95;"
-              ],
-              "removed": [
-                "    out << \"  \\\"p5_final\\\": \" << p95 << \",\\n\";"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{\n  \"BUG16\": \"true\"\n}",
-      "llm_verified": true,
-      "verification_method": "llm"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 10,
-      "domain": "fintech",
-      "commit_hash": "508ede6e60fc4b42cf78de81864c99650b294da0",
-      "commit_message": "fix #10",
-      "submission_time": "2025-11-07T14:52:54.360493",
-      "status": "submitted",
-      "verified": true,
-      "points": 10,
-      "code_changes": [
-        {
-          "filename": "stock_price_predictor/predictor.py",
-          "changes": [
-            {
-              "added": [
-                "        return train_test_split(X, y, test_size=0.2,shuffle=False) # <-- BUG"
-              ],
-              "removed": [
-                "        return train_test_split(X, y, test_size=0.2) # <-- BUG"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{\n  \"BUG10\": \"true\"\n}",
-      "llm_verified": true,
-      "verification_method": "llm"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 4,
-      "domain": "fintech",
-      "commit_hash": "76fbd1a0f9806283fa7dfe69b9f36f571e2dbdfc",
-      "commit_message": "fix #4",
-      "submission_time": "2025-11-07T14:06:43.194543",
-      "status": "submitted",
-      "verified": true,
-      "points": 0,
-      "code_changes": [
-        {
-          "filename": "market_sentiment/sentiment_analyzer.py",
-          "changes": [
-            {
-              "added": [],
-              "removed": [
-                "            headlines = [title] * len(headlines)"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{\n  \"BUG4\": \"true\"\n}",
-      "llm_verified": true,
-      "verification_method": "llm"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 9,
-      "domain": "fintech",
-      "commit_hash": "c4c9b32f25108fc57c100112ce07073a74397c3a",
-      "commit_message": "fix #9",
-      "submission_time": "2025-11-07T14:37:05.816784",
-      "status": "submitted",
-      "verified": true,
-      "points": 5,
-      "code_changes": [
-        {
-          "filename": "stock_price_predictor/predictor.py",
-          "changes": [
-            {
-              "added": [
-                "            ax.plot(actual, label='Actual', linewidth=2, color='blue') # <-- BUG",
-                "            ax.plot(predicted, label='Predicted', linewidth=2, color='red', alpha=0.7)"
-              ],
-              "removed": [
-                "            ax.plot(predicted, label='Actual', linewidth=2, color='blue') # <-- BUG",
-                "            ax.plot(predicted, label='actual', linewidth=2, color='red', alpha=0.7)"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{ \"BUG9\": \"true\" }",
-      "llm_verified": true,
-      "verification_method": "llm"
-    },
     {
       "team_id": "finbugs",
       "bug_id": 17,
       "domain": "fintech",
-      "commit_hash": "eb0df7e3a899e46df65b6a08c6a7435c773b4caf",
+      "commit_hash": "b83d164b95c44f71c0e9044af30948b1caaa758d",
       "commit_message": "fix #17",
-      "submission_time": "2025-11-07T11:54:13.198482",
+      "submission_time": "2025-11-07T18:11:50.557580",
       "status": "submitted",
-      "verified": true,
-      "points": 5,
+      "verified": false,
+      "points": 0,
       "code_changes": [
         {
           "filename": "cpp_services/pair_trading/backtest.cpp",
           "changes": [
             {
               "added": [
-                "            double tradePnl = ( entryPrice - exitPrice) / entryPrice; // PnL as %"
+                "            double tradePnl = (entryPrice - exitPrice) / entryPrice; // PnL as %"
               ],
               "removed": [
-                "            double tradePnl = (exitPrice - entryPrice) / entryPrice; // PnL as %"
+                "            double tradePnl = ( entryPrice - exitPrice) / entryPrice; // PnL as %"
               ]
             }
           ]
         }
       ],
-      "llm_verification": "{\n  \"BUG17\": \"true\"\n}",
-      "llm_verified": true,
+      "llm_verification": "{ \"BUG17\": \"false\" }",
+      "llm_verified": false,
       "verification_method": "llm"
     },
     {
       "team_id": "finbugs",
       "bug_id": 11,
       "domain": "fintech",
-      "commit_hash": "5b54517e14ba90909c1be0c2624a9d12061ae1a5",
+      "commit_hash": "4fabac57d71ab74c9c2380c2169bfeda2cfbec33",
       "commit_message": "fix #11",
-      "submission_time": "2025-11-07T12:56:19.799401",
+      "submission_time": "2025-11-07T18:13:48.907701",
       "status": "submitted",
-      "verified": false,
-      "points": 0,
+      "verified": true,
+      "points": 15,
       "code_changes": [
         {
           "filename": "stock_price_predictor/predictor.py",
           "changes": [
             {
               "added": [
-                "        loss = ( -delta.where(delta < 0, 0)).rolling(window=14).mean() # <-- BUG"
-              ],
-              "removed": [
                 "        loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean() # <-- BUG"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{}",
-      "llm_verified": false,
-      "verification_method": "error"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 3,
-      "domain": "fintech",
-      "commit_hash": "88ac387f2d0dec8c9f087ef9951b5834e1aeeb23",
-      "commit_message": "fix #3",
-      "submission_time": "2025-11-07T14:00:21.138921",
-      "status": "submitted",
-      "verified": false,
-      "points": 0,
-      "code_changes": [
-        {
-          "filename": "market_sentiment/sentiment_analyzer.py",
-          "changes": [
-            {
-              "added": [
-                "        text = re.sub(r'[^A-Za-z]\\\\s', '', text)"
               ],
               "removed": [
-                "        text = re.sub(r'[^A-Za-z]\\s', '', text)"
+                "        loss = (delta.where(delta < 0, 0)).rolling(window=14).mean() # <-- BUG"
               ]
             }
           ]
         }
       ],
-      "llm_verification": "{}",
-      "llm_verified": false,
-      "verification_method": "error"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 7,
-      "domain": "fintech",
-      "commit_hash": "36dd67afba68e0de1777b44317f3300b649eff42",
-      "commit_message": "fix #7",
-      "submission_time": "2025-11-07T14:28:13.784074",
-      "status": "submitted",
-      "verified": true,
-      "points": 15,
-      "code_changes": [
-        {
-          "filename": "portfolio/optimizer.py",
-          "changes": [
-            {
-              "added": [
-                "            weights /= np.sum(weights)"
-              ],
-              "removed": [
-                "            weights /= n_assets"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{ \"BUG7\": \"true\" }",
+      "llm_verification": "{ \"BUG11\": \"true\" }",
       "llm_verified": true,
       "verification_method": "llm"
     },
     {
       "team_id": "finbugs",
-      "bug_id": 8,
+      "bug_id": 15,
       "domain": "fintech",
-      "commit_hash": "d0acc24824109d8ea5ca97d8accc1fa22d2d631f",
-      "commit_message": "fix #8",
-      "submission_time": "2025-11-07T14:31:37.192484",
+      "commit_hash": "edc5c9c7820b9e9a9eb904f8320078a678dd2159",
+      "commit_message": "fix #15",
+      "submission_time": "2025-11-07T18:06:01.030345",
       "status": "submitted",
       "verified": true,
       "points": 0,
       "code_changes": [
         {
-          "filename": "portfolio/optimizer.py",
+          "filename": "cpp_services/monte_carlo/monte_carlo.cpp",
           "changes": [
             {
               "added": [
-                "        features['beta'] = self.returns.apply(lambda x: x.cov(market_proxy) / market_proxy.var())"
+                "            double diffusion = sigma * sqrt(dt)* z;"
               ],
               "removed": [
-                "        features['beta'] = self.returns.apply(lambda x: x.cov(market_proxy) / x.var())"
+                "            double diffusion = sigma * sqrt(dt) * z;",
+                "            pls accept my code or ill kms pls maanjao na bbg "
               ]
             }
           ]
         }
       ],
-      "llm_verification": "{\n  \"BUG8\": \"true\"\n}",
-      "llm_verified": true,
-      "verification_method": "llm"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 5,
-      "domain": "fintech",
-      "commit_hash": "b1f48fb495e7bb6ad3586a985413965e423c0ec4",
-      "commit_message": "fix #5",
-      "submission_time": "2025-11-07T14:09:18.452643",
-      "status": "submitted",
-      "verified": false,
-      "points": 0,
-      "code_changes": [
-        {
-          "filename": "portfolio/optimizer.py",
-          "changes": [
-            {
-              "added": [
-                "        var_historical = np.percentile(portfolio_returns, (confidence_level)*100)"
-              ],
-              "removed": [
-                "        var_historical = np.percentile(portfolio_returns, confidence_level*100)"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{\n  \"BUG5\": \"false\"\n}",
-      "llm_verified": false,
-      "verification_method": "llm"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 1,
-      "domain": "fintech",
-      "commit_hash": "320ad1229c0a221f25d9bb1cfd2f54df31e2ffd2",
-      "commit_message": "fix #1",
-      "submission_time": "2025-11-07T13:53:51.242415",
-      "status": "submitted",
-      "verified": false,
-      "points": 0,
-      "code_changes": [
-        {
-          "filename": "GITHUB_ISSUES_README.md",
-          "changes": [
-            {
-              "added": [
-                "# GitHub Issues Setup for FinBugs",
-                "",
-                "This script automatically creates GitHub issues for all 21 bugs from `bugs.json`.",
-                "",
-                "## Prerequisites",
-                "",
-                "1. **GitHub CLI (gh)** must be installed and authenticated",
-                "   ```bash",
-                "   # Install gh (if not already installed)",
-                "   # On Ubuntu/Debian:",
-                "   sudo apt install gh",
-                "   ",
-                "   # On macOS:",
-                "   brew install gh",
-                "   ",
-                "   # Authenticate with GitHub",
-                "   gh auth login",
-                "   ```",
-                "",
-                "2. **Repository Access**: You need write access to `dawdameet/team-finbugs-fintech`",
-                "",
-                "## Usage",
-                "",
-                "Simply run the script:",
-                "",
-                "```bash",
-                "python raise_issues.py",
-                "```",
-                "",
-                "or",
-                "",
-                "```bash",
-                "python3 raise_issues.py",
-                "```",
-                "",
-                "## What the Script Does",
-                "",
-                "1. **Creates Labels** (if they don't exist):",
-                "   - `finbugs` - Main module label",
-                "   - `puzzle` - Marks it as a puzzle-style bug",
-                "   - `difficulty-easy`, `difficulty-medium`, `difficulty-hard`, `difficulty-extreme` - Difficulty levels",
-                "   - `bug-1` through `bug-20`, `bug-32` - Individual bug identifiers",
-                "",
-                "2. **Creates Issues**: ",
-                "   - One issue per bug from `bugs.json`",
-                "   - Each issue includes:",
-                "     - Bug description",
-                "     - Expected vs Current behavior",
-                "     - Files affected",
-                "     - Difficulty level and points",
-                "     - Reproduction steps",
-                "     - Hints",
-                "     - Solution (hidden in spoiler)",
-                "",
-                "## Issue Numbering",
-                "",
-                "The script will create issues with GitHub's auto-incrementing issue numbers. The bug IDs are tracked in labels (`bug-1`, `bug-2`, etc.) and in the issue body.",
-                "",
-                "## Verifying Issues",
-                "",
-                "After running the script, visit:",
-                "```",
-                "https://github.com/dawdameet/team-finbugs-fintech/issues",
-                "```",
-                "",
-                "## Troubleshooting",
-                "",
-                "### Error: gh not found",
-                "```bash",
-                "# Install GitHub CLI first",
-                "sudo apt install gh  # Ubuntu/Debian",
-                "brew install gh      # macOS",
-                "```",
-                "",
-                "### Error: Not authenticated",
-                "```bash",
-                "gh auth login",
-                "# Follow the prompts to authenticate",
-                "```",
-                "",
-                "### Error: bugs.json not found",
-                "Make sure you're running the script from the repository root, or the bugs.json file is at:",
-                "```",
-                "/home/meet/College/CodeAI/codeverse/6-7-11/domains/fintech/bugs.json",
-                "```",
-                "",
-                "## Output",
-                "",
-                "The script will show progress like:",
-                "```",
-                "============================================================",
-                "FinBugs GitHub Issues Creation Script",
-                "============================================================",
-                "Target Repository: dawdameet/team-finbugs-fintech",
-                "Loading bugs from: /path/to/bugs.json",
-                "Total Bugs to Create: 21",
-                "",
-                "============================================================",
-                "STEP 1: Creating Labels",
-                "============================================================",
-                "\u2713 Created label: finbugs",
-                "\u2713 Created label: difficulty-easy",
-                "...",
-                "",
-                "============================================================",
-                "STEP 2: Creating Issues",
-                "============================================================",
-                "\u2713 Created issue for Bug 1: Incorrect VADER Sentiment Threshold",
-                "\u2713 Created issue for Bug 2: Reversed Stopword Filter Logic",
-                "...",
-                "",
-                "============================================================",
-                "Total issues created: 21/21",
-                "============================================================",
-                "",
-                "\u2705 All done! Check your GitHub Issues tab:",
-                "   https://github.com/dawdameet/team-finbugs-fintech/issues",
-                "```"
-              ],
-              "removed": []
-            }
-          ]
-        },
-        {
-          "filename": "SETUP_COMPLETE.md",
-          "changes": [
-            {
-              "added": [
-                "# FinBugs Repository - Complete Setup Summary",
-                "",
-                "## \u2705 Repository Status: FULLY CONFIGURED",
-                "",
-                "### \ud83d\udccb Bugs Implementation",
-                "All 21 bugs from `bugs.json` are correctly implemented in the codebase:",
-                "",
-                "#### Python Files (Bugs 1-12)",
-                "- \u2705 `market_sentiment/sentiment_analyzer.py` - Bugs 1, 2, 3, 4",
-                "- \u2705 `portfolio/optimizer.py` - Bugs 5, 6, 7, 8",
-                "- \u2705 `stock_price_predictor/predictor.py` - Bugs 9, 10, 11, 12",
-                "",
-                "#### C++ Files (Bugs 13-20)",
-                "- \u2705 `cpp_services/monte_carlo/monte_carlo.cpp` - Bugs 13, 14, 15, 16",
-                "- \u2705 `cpp_services/pair_trading/backtest.cpp` - Bugs 17, 18, 19, 20",
-                "",
-                "#### Bug Directory (Bug 32)",
-                "- \u2705 `bug/main.py` - Bug 32",
-                "",
-                "### \ud83c\udfaf Current Git Status",
-                "- **HEAD Commit**: 4f427bd",
-                "- **Branch**: main",
-                "- **Status**: All bugs committed and synced with bugs.json",
-                "- **Verification**: \u2705 PASSED - All 21 bugs present and compliant",
-                "",
-                "### \ud83d\udcdd GitHub Issues Setup",
-                "",
-                "#### Files Created",
-                "1. **`raise_issues.py`** - Automated script to create GitHub issues",
-                "   - Loads bugs from `bugs.json`",
-                "   - Creates appropriate labels",
-                "   - Creates 21 issues with full bug details",
-                "   - Target repo: `dawdameet/team-finbugs-fintech`",
-                "",
-                "2. **`GITHUB_ISSUES_README.md`** - Documentation for the issues script",
-                "",
-                "#### How to Create Issues",
-                "",
-                "```bash",
-                "# 1. Ensure GitHub CLI is installed and authenticated",
-                "gh auth login",
-                "",
-                "# 2. Run the script",
-                "cd /home/meet/College/CodeAI/codeverse/6-7-11/team-finbugs-fintech",
-                "python raise_issues.py",
-                "",
-                "# 3. Verify at",
-                "# https://github.com/dawdameet/team-finbugs-fintech/issues",
-                "```",
-                "",
-                "### \ud83c\udff7\ufe0f Labels That Will Be Created",
-                "- `finbugs` - Main module identifier",
-                "- `puzzle` - Marks puzzle-style bugs",
-                "- `difficulty-easy` - 10 points (7 bugs)",
-                "- `difficulty-medium` - 20 points (7 bugs)",
-                "- `difficulty-hard` - 30 points (3 bugs)",
-                "- `difficulty-extreme` - 40 points (4 bugs)",
-                "- `bug-1` through `bug-20`, `bug-32` - Individual bug trackers",
-                "",
-                "### \ud83d\udcca Bug Statistics",
-                "",
-                "| Difficulty | Count | Points Each | Total Points |",
-                "|------------|-------|-------------|--------------|",
-                "| Easy       | 7     | 10          | 70           |",
-                "| Medium     | 7     | 20          | 140          |",
-                "| Hard       | 3     | 30          | 90           |",
-                "| Extreme    | 4     | 40          | 160          |",
-                "| **TOTAL**  | **21**|             | **460**      |",
-                "",
-                "### \ud83d\uddc2\ufe0f Bug Distribution by Module",
-                "",
-                "| Module                    | Bug IDs      | Count |",
-                "|---------------------------|--------------|-------|",
-                "| Market Sentiment Analyzer | 1, 2, 3, 4   | 4     |",
-                "| Portfolio Optimizer       | 5, 6, 7, 8   | 4     |",
-                "| Stock Price Predictor     | 9, 10, 11, 12| 4     |",
-                "| Monte Carlo (C++)         | 13, 14, 15, 16| 4    |",
-                "| Pair Trading (C++)        | 17, 18, 19, 20| 4    |",
-                "| Bug Directory             | 32           | 1     |",
-                "",
-                "### \ud83d\udcc2 Repository Structure",
-                "```",
-                "team-finbugs-fintech/",
-                "\u251c\u2500\u2500 bug/",
-                "\u2502   \u2514\u2500\u2500 main.py (Bug 32)",
-                "\u251c\u2500\u2500 market_sentiment/",
-                "\u2502   \u2514\u2500\u2500 sentiment_analyzer.py (Bugs 1-4)",
-                "\u251c\u2500\u2500 portfolio/",
-                "\u2502   \u2514\u2500\u2500 optimizer.py (Bugs 5-8)",
-                "\u251c\u2500\u2500 stock_price_predictor/",
-                "\u2502   \u2514\u2500\u2500 predictor.py (Bugs 9-12)",
-                "\u251c\u2500\u2500 cpp_services/",
-                "\u2502   \u251c\u2500\u2500 monte_carlo/",
-                "\u2502   \u2502   \u251c\u2500\u2500 monte_carlo.cpp (Bugs 13-16)",
-                "\u2502   \u2502   \u251c\u2500\u2500 monte_carlo.h",
-                "\u2502   \u2502   \u2514\u2500\u2500 Makefile",
-                "\u2502   \u2514\u2500\u2500 pair_trading/",
-                "\u2502       \u2514\u2500\u2500 backtest.cpp (Bugs 17-20)",
-                "\u251c\u2500\u2500 raise_issues.py (Issues creation script)",
-                "\u251c\u2500\u2500 GITHUB_ISSUES_README.md (Issues documentation)",
-                "\u2514\u2500\u2500 README.md",
-                "```",
-                "",
-                "### \u2728 Next Steps",
-                "",
-                "1. **Create GitHub Issues**:",
-                "   ```bash",
-                "   python raise_issues.py",
-                "   ```",
-                "",
-                "2. **Verify Issues Created**:",
-                "   Visit: https://github.com/dawdameet/team-finbugs-fintech/issues",
-                "",
-                "3. **Start Bug Hunt**:",
-                "   - Participants can now browse issues",
-                "   - Each issue has complete bug details, hints, and hidden solutions",
-                "   - Close issues with \"Fixes #X\" in commit messages",
-                "",
-                "### \ud83d\udd0d Verification Commands",
-                "",
-                "```bash",
-                "# Verify all bugs are in current HEAD",
-                "git log -1 --stat",
-                "",
-                "# Check specific bugs",
-                "grep -n \"if compound >= 0.5:\" market_sentiment/sentiment_analyzer.py",
-                "grep -n \"weights /= n_assets\" portfolio/optimizer.py",
-                "grep -n \"range(0,10)\" bug/main.py",
-                "",
-                "# Count total bugs",
-                "cat /home/meet/College/CodeAI/codeverse/6-7-11/domains/fintech/bugs.json | jq '. | length'",
-                "```",
-                "",
-                "### \ud83c\udf89 Status: READY FOR DEPLOYMENT",
-                "",
-                "All components are in place:",
-                "- \u2705 Bugs correctly implemented in code",
-                "- \u2705 All files committed to git",
-                "- \u2705 bugs.json compliance verified",
-                "- \u2705 GitHub issues script ready",
-                "- \u2705 Documentation complete",
-                "",
-                "**The FinBugs repository is ready for the bug hunt!** \ud83d\ude80"
-              ],
-              "removed": []
-            }
-          ]
-        },
-        {
-          "filename": "market_sentiment/sentiment_analyzer.py",
-          "changes": [
-            {
-              "added": [
-                "        if compound >= 0.05:"
-              ],
-              "removed": [
-                "        if compound >= 0.5:"
-              ]
-            }
-          ]
-        },
-        {
-          "filename": "raise_issues.py",
-          "changes": [
-            {
-              "added": [
-                "#!/usr/bin/env python3",
-                "# raise_issues.py",
-                "# Creates GitHub issues for all 21 FinBugs from bugs.json",
-                "# Run with: python raise_issues.py",
-                "# Prerequisites: GitHub CLI (gh) authenticated; write access to \"dawdameet/team-finbugs-fintech\".",
-                "",
-                "import subprocess",
-                "import json",
-                "import sys",
-                "import os",
-                "",
-                "def create_labels(repo):",
-                "    \"\"\"Create all necessary labels if they don't exist\"\"\"",
-                "    print(f\"Creating labels for {repo}...\")",
-                "    ",
-                "    # Common labels",
-                "    labels = [",
-                "        {\"name\": \"finbugs\", \"color\": \"0e8a16\", \"desc\": \"FinBugs Fintech module\"},",
-                "        {\"name\": \"puzzle\", \"color\": \"9f7ae2\", \"desc\": \"Puzzle-style bug with riddle hint\"},",
-                "        {\"name\": \"difficulty-easy\", \"color\": \"28a745\", \"desc\": \"Easy difficulty (10 pts)\"},",
-                "        {\"name\": \"difficulty-medium\", \"color\": \"ffc107\", \"desc\": \"Medium difficulty (20 pts)\"},",
-                "        {\"name\": \"difficulty-hard\", \"color\": \"fd7e14\", \"desc\": \"Hard difficulty (30 pts)\"},",
-                "        {\"name\": \"difficulty-extreme\", \"color\": \"dc3545\", \"desc\": \"Extreme difficulty (40 pts)\"},",
-                "    ]",
-                "    ",
-                "    # Bug-specific labels (bug-1 to bug-20, bug-32)",
-                "    bug_ids = list(range(1, 21)) + [32]",
-                "    for i in bug_ids:",
-                "        labels.append({",
-                "            \"name\": f\"bug-{i}\",",
-                "            \"color\": \"d73a4a\",  # Red for bugs",
-                "            \"desc\": f\"Bug #{i} in FinBugs module\"",
-                "        })",
-                "    ",
-                "    for label in labels:",
-                "        try:",
-                "            subprocess.run([",
-                "                \"gh\", \"label\", \"create\", label[\"name\"],",
-                "                \"--repo\", repo,",
-                "                \"--color\", label[\"color\"],",
-                "                \"--description\", label[\"desc\"]",
-                "            ], check=False, capture_output=True)",
-                "            print(f\"\u2713 Created label: {label['name']}\")",
-                "        except subprocess.CalledProcessError:",
-                "            print(f\"  Label {label['name']} already exists; skipping.\")",
-                "",
-                "def create_bug_issues(repo, bugs_data):",
-                "    \"\"\"Create bug issues with puzzle-style hints\"\"\"",
-                "    print(f\"\\nPopulating FinBugs issues for {repo}...\")",
-                "    created_count = 0",
-                "    ",
-                "    for bug in bugs_data:",
-                "        issue_body = f\"\"\"## \ud83d\udc1b Bug Description",
-                "{bug['description']}",
-                "",
-                "## \u2705 Expected Behavior",
-                "{bug['expected']}",
-                "",
-                "## \u274c Current Behavior",
-                "{bug['current']}",
-                "",
-                "## \ud83d\udcc1 Files Affected",
-                "`{bug['files']}`",
-                "",
-                "## \ud83c\udfaf Difficulty: {bug['difficulty'].upper()}",
-                "**Points: {bug['points']}**",
-                "",
-                "## \ud83d\udd0d Reproduction Steps",
-                "```",
-                "{bug['steps']}",
-                "```",
-                "",
-                "## \ud83d\udca1 Hints",
-                "{bug.get('hints', 'No hints available - good luck!')}",
-                "",
-                "## \ud83d\udd27 Solution (Hidden)",
-                "<details>",
-                "<summary>Click to reveal solution</summary>",
-                "",
-                "```",
-                "{bug.get('solution', 'Solution not provided')}",
-                "```",
-                "</details>",
-                "",
-                "---",
-                "**Bug ID**: {bug['id']}  ",
-                "**Module**: FinBugs (Fintech AI)  ",
-                "**Status**: \ud83d\udd34 UNRESOLVED",
-                "\"\"\"",
-                "        ",
-                "        # Labels: bug-{id}, finbugs, difficulty-{level}, puzzle",
-                "        labels = [f\"bug-{bug['id']}\", \"finbugs\", f\"difficulty-{bug['difficulty']}\", \"puzzle\"]",
-                "        label_str = \",\".join(labels)",
-                "        ",
-                "        try:",
-                "            # Create issue using GitHub CLI",
-                "            result = subprocess.run([",
-                "                \"gh\", \"issue\", \"create\",",
-                "                \"-R\", repo,",
-                "                \"-t\", f\"Bug {bug['id']}: {bug['title']}\",",
-                "                \"-b\", issue_body,",
-                "                \"--label\", label_str",
-                "            ], check=True, capture_output=True, text=True)",
-                "            ",
-                "            print(f\"\u2713 Created issue for Bug {bug['id']}: {bug['title']}\")",
-                "            created_count += 1",
-                "        except subprocess.CalledProcessError as e:",
-                "            print(f\"\u2717 Failed to create issue for Bug {bug['id']}: {e}\")",
-                "            if e.stderr:",
-                "                print(f\"  Error: {e.stderr}\")",
-                "    ",
-                "    print(f\"\\n{'='*60}\")",
-                "    print(f\"Total issues created: {created_count}/{len(bugs_data)}\")",
-                "    print(f\"{'='*60}\")",
-                "",
-                "def load_bugs_from_json(json_path):",
-                "    \"\"\"Load bugs from the bugs.json file\"\"\"",
-                "    try:",
-                "        with open(json_path, 'r') as f:",
-                "            return json.load(f)",
-                "    except FileNotFoundError:",
-                "        print(f\"Error: {json_path} not found!\")",
-                "        sys.exit(1)",
-                "    except json.JSONDecodeError as e:",
-                "        print(f\"Error parsing JSON: {e}\")",
-                "        sys.exit(1)",
-                "",
-                "# Target repo",
-                "repo = \"dawdameet/team-finbugs-fintech\"",
-                "",
-                "if __name__ == \"__main__\":",
-                "    print(\"=\"*60)",
-                "    print(\"FinBugs GitHub Issues Creation Script\")",
-                "    print(\"=\"*60)",
-                "    print(f\"Target Repository: {repo}\")",
-                "    ",
-                "    # Check if gh CLI is installed",
-                "    try:",
-                "        subprocess.run([\"gh\", \"--version\"], check=True, capture_output=True)",
-                "    except (subprocess.CalledProcessError, FileNotFoundError):",
-                "        print(\"\\n\u274c Error: GitHub CLI (gh) is not installed or not in PATH\")",
-                "        print(\"Install it from: https://cli.github.com/\")",
-                "        sys.exit(1)",
-                "    ",
-                "    # Check if authenticated",
-                "    try:",
-                "        subprocess.run([\"gh\", \"auth\", \"status\"], check=True, capture_output=True)",
-                "    except subprocess.CalledProcessError:",
-                "        print(\"\\n\u274c Error: Not authenticated with GitHub CLI\")",
-                "        print(\"Run: gh auth login\")",
-                "        sys.exit(1)",
-                "    ",
-                "    # Load bugs from JSON file",
-                "    bugs_json_path = \"/home/meet/College/CodeAI/codeverse/6-7-11/domains/fintech/bugs.json\"",
-                "    ",
-                "    # Check if file exists, if not try local path",
-                "    if not os.path.exists(bugs_json_path):",
-                "        bugs_json_path = \"bugs.json\"",
-                "    ",
-                "    if not os.path.exists(bugs_json_path):",
-                "        print(f\"\\n\u274c Error: bugs.json not found!\")",
-                "        print(f\"Expected at: /home/meet/College/CodeAI/codeverse/6-7-11/domains/fintech/bugs.json\")",
-                "        print(f\"or in current directory\")",
-                "        sys.exit(1)",
-                "    ",
-                "    print(f\"Loading bugs from: {bugs_json_path}\")",
-                "    finbugs_data = load_bugs_from_json(bugs_json_path)",
-                "    print(f\"Total Bugs to Create: {len(finbugs_data)}\")",
-                "    ",
-                "    # Create labels first",
-                "    print(\"\\n\" + \"=\"*60)",
-                "    print(\"STEP 1: Creating Labels\")",
-                "    print(\"=\"*60)",
-                "    create_labels(repo)",
-                "    ",
-                "    # Then create issues",
-                "    print(\"\\n\" + \"=\"*60)",
-                "    print(\"STEP 2: Creating Issues\")",
-                "    print(\"=\"*60)",
-                "    create_bug_issues(repo, finbugs_data)",
-                "    ",
-                "    print(\"\\n\u2705 All done! Check your GitHub Issues tab:\")",
-                "    print(f\"   https://github.com/{repo}/issues\")",
-                "    print(\"\\nTeams can now solve bugs and submit fixes!\")",
-                "    print(\"Use 'Fixes #<issue-number>' in commit messages to auto-close issues.\")"
-              ],
-              "removed": []
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{}",
-      "llm_verified": false,
-      "verification_method": "error"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 6,
-      "domain": "fintech",
-      "commit_hash": "e42af1fa5e03b95e2939da81b0e9623491c78ca2",
-      "commit_message": "fix #6",
-      "submission_time": "2025-11-07T14:58:21.841350",
-      "status": "submitted",
-      "verified": false,
-      "points": 0,
-      "code_changes": [
-        {
-          "filename": "portfolio/optimizer.py",
-          "changes": [
-            {
-              "added": [
-                "            np.dot(weights.T,np.dot(self.returns.cov(), weights))"
-              ],
-              "removed": [
-                "            np.dot(weights.T,np.dot(self.returns.cov() * 252, weights))"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{ \"BUG6\": \"false\" }",
-      "llm_verified": false,
-      "verification_method": "llm"
-    },
-    {
-      "team_id": "finbugs",
-      "bug_id": 2,
-      "domain": "fintech",
-      "commit_hash": "6b98777338d93f8b14c9d0bbbb534834f2ddf7d4",
-      "commit_message": "fix #2",
-      "submission_time": "2025-11-07T13:55:43.104150",
-      "status": "submitted",
-      "verified": true,
-      "points": 10,
-      "code_changes": [
-        {
-          "filename": "market_sentiment/sentiment_analyzer.py",
-          "changes": [
-            {
-              "added": [
-                "            all_words.extend([w for w in words if w not in stop_words and len(w) > 3])"
-              ],
-              "removed": [
-                "            all_words.extend([w for w in words if w in stop_words and len(w) > 3])"
-              ]
-            }
-          ]
-        }
-      ],
-      "llm_verification": "{\n  \"BUG2\": \"true\"\n}",
+      "llm_verification": "{ \"BUG15\": \"true\" }",
       "llm_verified": true,
       "verification_method": "llm"
     }
