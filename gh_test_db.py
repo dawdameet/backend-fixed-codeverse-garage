@@ -108,34 +108,22 @@ class HackathonTracker:
             print(f"[ERROR] Failed to reopen Bug #{bug_id}: {e}")
             return False
 
-    def get_bug_points(self, full_repo_name, bug_id):
-        """Fetch bug points from GitHub issue labels"""
+    def get_bug_points(self, domain, bug_id):
+        """Fetch bug points from domain bugs.json file"""
         try:
-            result = subprocess.run(
-                [
-                    "gh", "issue", "view", str(bug_id),
-                    "-R", full_repo_name,
-                    "--json", "labels"
-                ],
-                capture_output=True, text=True, check=True, timeout=30
-            )
-            labels = [lbl["name"].lower() for lbl in json.loads(result.stdout).get("labels", [])]
-
-            if "difficulty-easy" in labels:
-                return 5
-            if "difficulty-medium" in labels:
-                return 10
-            if "difficulty-hard" in labels:
-                return 15
+            bugs_file = f"domains/{domain}/bugs.json"
+            if os.path.exists(bugs_file):
+                with open(bugs_file, 'r', encoding='utf-8') as f:
+                    bugs_data = json.load(f)
+                    for bug in bugs_data:
+                        if bug['id'] == bug_id:
+                            return bug.get('points', 10)
             
-            # If no difficulty label found, assign default points
-            print(f"[WARNING] No difficulty label found for Bug #{bug_id}, assigning default 10 points")
-            return 10
-        except subprocess.TimeoutExpired:
-            print(f"[ERROR] Timeout getting points for Bug #{bug_id}, assigning default 10 points")
+            # If bug not found in domain file, assign default points
+            print(f"[WARNING] Bug #{bug_id} not found in {bugs_file}, assigning default 10 points")
             return 10
         except Exception as e:
-            print(f"[ERROR] Failed to get points for Bug #{bug_id}: {e}, assigning default 10 points")
+            print(f"[ERROR] Failed to get points for Bug #{bug_id} from {bugs_file}: {e}, assigning default 10 points")
             return 10
 
     def extract_code_changes(self, full_repo_name, commit_hash):
@@ -276,7 +264,7 @@ END "BUG{bug_id}"
         team_dir = f"teams/{team_id}"
         os.makedirs(f"{team_dir}/bug-fixes", exist_ok=True)
 
-        points = self.get_bug_points(full_repo_name, bug_id)
+        points = self.get_bug_points(domain, bug_id)
 
         # Extract code changes
         print(f"[INFO] Extracting code changes for Bug #{bug_id}...")
