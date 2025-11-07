@@ -2,32 +2,19 @@
   "team_id": "finbugs",
   "bug_id": 5,
   "domain": "fintech",
-  "commit_hash": "d3bdff3e95795cc87ad52710f8b6a5f3851cd24e",
+  "commit_hash": "b1f48fb495e7bb6ad3586a985413965e423c0ec4",
   "commit_message": "fix #5",
-  "submission_time": "2025-11-07T01:33:47.051296",
+  "submission_time": "2025-11-07T14:09:18.452643",
   "status": "submitted",
-  "verified": true,
-  "points": 5,
+  "verified": false,
+  "points": 0,
   "code_changes": [
-    {
-      "filename": "market_sentiment/sentiment_analyzer.py",
-      "changes": [
-        {
-          "added": [
-            "            all_words.extend([w for w in words if w in stop_words and len(w) > 3])"
-          ],
-          "removed": [
-            "            all_words.extend([w for w in words if w in  stop_words and len(w) > 3])"
-          ]
-        }
-      ]
-    },
     {
       "filename": "portfolio/optimizer.py",
       "changes": [
         {
           "added": [
-            "        var_historical = np.percentile(portfolio_returns, (1-confidence_level)*100)"
+            "        var_historical = np.percentile(portfolio_returns, (confidence_level)*100)"
           ],
           "removed": [
             "        var_historical = np.percentile(portfolio_returns, confidence_level*100)"
@@ -36,7 +23,7 @@
       ]
     }
   ],
-  "llm_verification": "{\n  \"BUG5\": \"true\"\n}",
-  "llm_verified": true,
+  "llm_verification": "{\n  \"BUG5\": \"false\"\n}",
+  "llm_verified": false,
   "verification_method": "llm"
 }

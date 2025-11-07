@@ -258,5 +258,18 @@
     "steps": "1. Understand the temporal sequence of a backtest\n2. Examine the main simulation loop carefully\n3. Identify the order of operations: add to window, calculate signals, make decisions\n4. Realize that when signals are calculated, today's spread is already in the window\n5. Understand this means the decision uses future information\n6. Restructure the loop: calculate signals first, make decisions, THEN add today's data",
     "hints": "Move spreadWindow.push_back(spread) to after all trading logic",
     "solution": "Change '// Current order: push_back(spread), then calculateMeanAndStdDev, then decide' to '// Correct order: calculateMeanAndStdDev, decide, then push_back(spread)'"
+  },
+  {
+    "id":32,
+    "title": "for loop starts from 1",
+    "description": "loop is starting from 1 and not 0",
+    "expected": "loop must start from 0",
+    "current": "loop starts from 0.",
+    "files": "bug/main.py",
+    "difficulty": "extreme",
+    "points": 40,
+    "steps": "i should start from 0 and not 1 in the range function",
+    "hints": "make the range functions first argument as 0 instead of 1 ",
+    "solution": "for i in range(0, 10):\n \tprint(i)"
   }
 ]

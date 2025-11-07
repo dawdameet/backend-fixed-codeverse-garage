@@ -30,6 +30,56 @@ class HackathonTracker:
             with open("leaderboard.json", "w", encoding="utf-8") as f:
                 json.dump([], f)
 
+    def reopen_bug_issue(self, bug_id, full_repo_name, reason="verification failed"):
+        """Reopen a bug issue when verification fails"""
+        try:
+            # Find the issue with the bug label
+            result = subprocess.run(
+                [
+                    "gh", "issue", "list",
+                    "-R", full_repo_name,
+                    "--state", "all",
+                    "--label", f"bug-{bug_id}",
+                    "--json", "number,title,state",
+                    "--limit", "1"
+                ],
+                capture_output=True, text=True, check=True, timeout=10
+            )
+            
+            issues = json.loads(result.stdout)
+            if not issues:
+                print(f"[WARNING] Bug #{bug_id} not found in repository")
+                return False
+            
+            issue = issues[0]
+            issue_num = issue["number"]
+            issue_state = issue["state"]
+            
+            if issue_state == "OPEN":
+                print(f"[INFO] Bug #{bug_id} issue is already OPEN")
+                return True
+            
+            # Build comment for reopening
+            comment = f"Bug verification failed. Reopening for another attempt.\\n\\n**Verification Status:** Failed ({reason})\\n**Action:** Issue reopened automatically for retry"
+            
+            # Reopen the issue
+            subprocess.run(
+                [
+                    "gh", "issue", "reopen",
+                    str(issue_num),
+                    "-R", full_repo_name,
+                    "--comment", comment
+                ],
+                capture_output=True, text=True, check=True, timeout=10
+            )
+            
+            print(f"[INFO] Successfully reopened issue #{issue_num} for Bug #{bug_id}")
+            return True
+            
+        except Exception as e:
+            print(f"[ERROR] Failed to reopen Bug #{bug_id}: {e}")
+            return False
+
     def get_bug_points(self, full_repo_name, bug_id):
         """Fetch bug points from GitHub issue labels"""
         try:
@@ -65,9 +115,9 @@ class HackathonTracker:
                     'git', 'clone', '--quiet', repo_url, temp_dir
                 ], check=True, capture_output=True, timeout=60)
                 
-                # Get the commit diff
+                # Get the commit diff with minimal context
                 result = subprocess.run([
-                    'git', 'show', '--format=', '--unified=3', commit_hash
+                    'git', 'show', '--format=', '--unified=1', commit_hash
                 ], cwd=temp_dir, capture_output=True, text=True, check=True, timeout=30)
                 
                 changes = self.parse_git_diff(result.stdout)
@@ -216,15 +266,21 @@ END "BUG{bug_id}"
                     print(f"[✓] Team {team_id} Bug #{bug_id} verified ({verification_method})")
                 else:
                     print(f"[✗] Team {team_id} Bug #{bug_id} rejected ({verification_method})")
+                    # Auto-reopen the issue
+                    self.reopen_bug_issue(bug_id, full_repo_name, reason=verification_method)
                     
             except Exception as e:
                 print(f"[ERROR] Verification failed for Team {team_id} Bug #{bug_id}: {e}")
                 llm_result = f"error: {str(e)}"
+                # Auto-reopen on error
+                self.reopen_bug_issue(bug_id, full_repo_name, reason="error")
         else:
             if not code_changes:
                 print(f"[ERROR] No code changes extracted for Bug #{bug_id}")
+                self.reopen_bug_issue(bug_id, full_repo_name, reason="no code changes")
             if not bug_description:
                 print(f"[ERROR] No bug description found for Bug #{bug_id} in domain {domain}")
+                self.reopen_bug_issue(bug_id, full_repo_name, reason="no bug description")
 
         submission = {
             "team_id": team_id,

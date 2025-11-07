@@ -1,0 +1,31 @@
+{
+  "team_id": "finbugs",
+  "bug_id": 9,
+  "domain": "fintech",
+  "commit_hash": "c4c9b32f25108fc57c100112ce07073a74397c3a",
+  "commit_message": "fix #9",
+  "submission_time": "2025-11-07T14:37:05.816784",
+  "status": "submitted",
+  "verified": true,
+  "points": 5,
+  "code_changes": [
+    {
+      "filename": "stock_price_predictor/predictor.py",
+      "changes": [
+        {
+          "added": [
+            "            ax.plot(actual, label='Actual', linewidth=2, color='blue') # <-- BUG",
+            "            ax.plot(predicted, label='Predicted', linewidth=2, color='red', alpha=0.7)"
+          ],
+          "removed": [
+            "            ax.plot(predicted, label='Actual', linewidth=2, color='blue') # <-- BUG",
+            "            ax.plot(predicted, label='actual', linewidth=2, color='red', alpha=0.7)"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{ \"BUG9\": \"true\" }",
+  "llm_verified": true,
+  "verification_method": "llm"
+}

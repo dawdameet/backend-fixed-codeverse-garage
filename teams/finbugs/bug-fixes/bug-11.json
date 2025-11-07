@@ -1,0 +1,29 @@
+{
+  "team_id": "finbugs",
+  "bug_id": 11,
+  "domain": "fintech",
+  "commit_hash": "5b54517e14ba90909c1be0c2624a9d12061ae1a5",
+  "commit_message": "fix #11",
+  "submission_time": "2025-11-07T12:56:19.799401",
+  "status": "submitted",
+  "verified": false,
+  "points": 0,
+  "code_changes": [
+    {
+      "filename": "stock_price_predictor/predictor.py",
+      "changes": [
+        {
+          "added": [
+            "        loss = ( -delta.where(delta < 0, 0)).rolling(window=14).mean() # <-- BUG"
+          ],
+          "removed": [
+            "        loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean() # <-- BUG"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{}",
+  "llm_verified": false,
+  "verification_method": "error"
+}

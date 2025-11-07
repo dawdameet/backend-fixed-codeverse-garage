@@ -21,36 +21,27 @@ app.add_middleware(
 )
 
 # Gemini API Configuration
-GEMINI_API_KEY = "AIzaSyBNalJJJdA0eDA-8cJ7vu6cHN18Kuij3hg"
+# GEMINI_API_KEY = "AIzaSyBNalJJJdA0eDA-8cJ7vu6cHN18Kuij3hg"
+GEMINI_API_KEY="AIzaSyBNalJJJdA0eDA-8cJ7vu6cHN18Kuij3hg"
 GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025"
 GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
 
 SYSTEM_INSTRUCTION_TEMPLATE = """
-You are a JSON-only code verification bot. Your response MUST be a single, valid JSON object.
-Do not include *any* text, markdown, or explanations.
-Your response MUST start with {{ and end with }}.
+You are a JSON-only code verification bot. Respond ONLY with valid JSON.
 
-**Your Task:**
-You will be given:
-1.  A `Bug Documentation` string with all bugs in a START/END format.
-2.  A `Code Diff (JSON)` object showing code changes.
-3.  A specific bug key to check: `{bug_to_check}`.
+Task: Check if code changes fix bug `{bug_to_check}`.
 
-**Step-by-Step Instructions:**
-1.  **Find the Bug:** Look in the `Bug Documentation` for the *exact* `START "{bug_to_check}":` block.
-2.  **Find the Solution:** Inside that block, find the `SOLUTION:` section.
-3.  **Analyze the Diff:** Look at the `Code Diff (JSON)`. Focus on the actual code changes.
-4.  **Make a Decision:**
-    * Compare the expected `SOLUTION` with the actual code changes in the diff.
-    * **Ignore minor whitespace, formatting, and comment differences.**
-    * Focus on **functional equivalence** - the logic should be the same.
-    * Output `{{ "{bug_to_check}": "true" }}` **if and only if** the code changes implement the solution correctly.
-    * Output `{{ "{bug_to_check}": "false" }}` in ALL other cases.
+Steps:
+1. Find the bug in Bug Documentation
+2. Compare the SOLUTION with Code Changes
+3. Ignore whitespace/formatting differences
+4. Focus on functional correctness
 
-**Important:**
-- Be strict about logic but lenient about code style
-- Consider different but equivalent implementations as correct
-- Only return true if the core bug fix is implemented properly
+Response format (JSON ONLY):
+- If fixed: {{ "{bug_to_check}": "true" }}
+- If not fixed: {{ "{bug_to_check}": "false" }}
+
+Be lenient on style, strict on logic.
 """
 
 class VerifyRequest(BaseModel):
@@ -76,22 +67,14 @@ async def verify_bug_fix(request: VerifyRequest):
     except:
         pretty_diff = str(parsed_diff)
 
-    user_prompt = f"""
-**Bug Documentation:**
----
+    user_prompt = f"""Bug Documentation:
 {request.bugs_doc}
----
 
-**Code Changes:**
----
+Code Changes:
 {pretty_diff}
----
 
-**Verification Request:**
-Check **ONLY** the bug named `{request.bug_to_check}`.
-
-Respond with JSON only: {{ "{request.bug_to_check}": "true" }} or {{ "{request.bug_to_check}": "false" }}
-"""
+Check bug: {request.bug_to_check}
+Response (JSON only): {{ "{request.bug_to_check}": "true/false" }}"""
 
     system_instruction = SYSTEM_INSTRUCTION_TEMPLATE.format(bug_to_check=request.bug_to_check)
 
@@ -104,7 +87,7 @@ Respond with JSON only: {{ "{request.bug_to_check}": "true" }} or {{ "{request.b
         },
         "generationConfig": {
             "temperature": 0.1,
-            "maxOutputTokens": 500
+            "maxOutputTokens": 2000
         }
     }
 
@@ -122,6 +105,13 @@ Respond with JSON only: {{ "{request.bug_to_check}": "true" }} or {{ "{request.b
             # Extract the response text
             if "candidates" in data and len(data["candidates"]) > 0:
                 candidate = data["candidates"][0]
+                
+                # Check for MAX_TOKENS issue
+                finish_reason = candidate.get("finishReason", "")
+                if finish_reason == "MAX_TOKENS":
+                    print(f"[WARNING] Response hit MAX_TOKENS limit. Returning rejection.")
+                    return {"verification_result": f'{{"{request.bug_to_check}": "false"}}', "method": "llm_max_tokens"}
+                
                 if "content" in candidate and "parts" in candidate["content"] and len(candidate["content"]["parts"]) > 0:
                     content = candidate["content"]["parts"][0]["text"]
                     
@@ -131,10 +121,11 @@ Respond with JSON only: {{ "{request.bug_to_check}": "true" }} or {{ "{request.b
                     return {"verification_result": cleaned_content, "method": "llm"}
                 else:
                     print(f"Unexpected response structure: {json.dumps(data, indent=2)}")
-                    raise HTTPException(status_code=500, detail=f"Unexpected API response structure")
+                    # Default to rejection if no content
+                    return {"verification_result": f'{{"{request.bug_to_check}": "false"}}', "method": "llm_error"}
             else:
                 print(f"No candidates in response: {json.dumps(data, indent=2)}")
-                raise HTTPException(status_code=500, detail="No response from AI model")
+                return {"verification_result": f'{{"{request.bug_to_check}": "false"}}', "method": "llm_error"}
                 
         except httpx.HTTPStatusError as e:
             print(f"HTTP error: {e}")

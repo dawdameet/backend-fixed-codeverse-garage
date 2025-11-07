@@ -2,9 +2,9 @@
   "team_id": "finbugs",
   "bug_id": 6,
   "domain": "fintech",
-  "commit_hash": "c005baba8c59984cb36dcba583bf6e8967a9284f",
+  "commit_hash": "e42af1fa5e03b95e2939da81b0e9623491c78ca2",
   "commit_message": "fix #6",
-  "submission_time": "2025-11-07T01:35:02.314810",
+  "submission_time": "2025-11-07T14:58:21.841350",
   "status": "submitted",
   "verified": false,
   "points": 0,
@@ -17,13 +17,13 @@
             "            np.dot(weights.T,np.dot(self.returns.cov(), weights))"
           ],
           "removed": [
-            "            np.dot(weights.T, np.dot(self.returns.cov(), weights))"
+            "            np.dot(weights.T,np.dot(self.returns.cov() * 252, weights))"
           ]
         }
       ]
     }
   ],
-  "llm_verification": "{\"BUG6\": \"false\"}",
+  "llm_verification": "{ \"BUG6\": \"false\" }",
   "llm_verified": false,
   "verification_method": "llm"
 }
