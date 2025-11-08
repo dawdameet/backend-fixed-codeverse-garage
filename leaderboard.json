@@ -1,10 +1,34 @@
 [
   {
     "team_id": "zimaad",
-    "bugs_solved": 3,
-    "total_points": 70,
-    "last_submission": "2025-11-08T09:26:52.039004",
+    "bugs_solved": 2,
+    "total_points": 60,
+    "last_submission": "2025-11-08T10:12:42.598723",
     "domain": "fintech",
     "rank": 1
+  },
+  {
+    "team_id": "sdda",
+    "bugs_solved": 3,
+    "total_points": 30,
+    "last_submission": "2025-11-08T11:10:59.191997",
+    "domain": "finance",
+    "rank": 2
+  },
+  {
+    "team_id": "rishi",
+    "bugs_solved": 2,
+    "total_points": 20,
+    "last_submission": "2025-11-08T10:37:50.257383",
+    "domain": "fintech",
+    "rank": 3
+  },
+  {
+    "team_id": "heet",
+    "bugs_solved": 1,
+    "total_points": 10,
+    "last_submission": "2025-11-08T11:38:24.264169",
+    "domain": "healthcare",
+    "rank": 4
   }
 ]

@@ -1,0 +1,29 @@
+{
+  "team_id": "heet",
+  "bug_id": 1,
+  "domain": "healthcare",
+  "commit_hash": "247fa4b9031981f6629745e516d4acb44d849e5f",
+  "commit_message": "fix #1",
+  "submission_time": "2025-11-08T11:38:24.264169",
+  "status": "submitted",
+  "verified": true,
+  "points": 10,
+  "code_changes": [
+    {
+      "filename": "src/agent/modules/conversational_logic.py",
+      "changes": [
+        {
+          "added": [
+            "    if message.patient_id == \"0\":"
+          ],
+          "removed": [
+            "    if message.patient_id == 0:"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\n  \"BUG1\": \"true\"\n}",
+  "llm_verified": true,
+  "verification_method": "llm"
+}

@@ -1,0 +1,129 @@
+{
+  "team_id": "sdda",
+  "total_submissions": 4,
+  "verified_submissions": 3,
+  "total_points": 30,
+  "last_submission": "2025-11-08T11:10:59.191997",
+  "submissions": [
+    {
+      "team_id": "sdda",
+      "bug_id": 1,
+      "domain": "finance",
+      "commit_hash": "35fe347eae3ce26b38079a717868e0c32e5517bd",
+      "commit_message": "fix #1",
+      "submission_time": "2025-11-08T10:59:48.653644",
+      "status": "submitted",
+      "verified": true,
+      "points": 10,
+      "code_changes": [
+        {
+          "filename": "backend/app/routes/dashboard.py",
+          "changes": [
+            {
+              "added": [],
+              "removed": [
+                "    days = 30  "
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\n  \"BUG1\": \"true\"\n}",
+      "llm_verified": true,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "sdda",
+      "bug_id": 2,
+      "domain": "finance",
+      "commit_hash": "5bed523151b5c26d08a1e236a2eec93d2db1d25b",
+      "commit_message": "fix #2",
+      "submission_time": "2025-11-08T11:04:18.812209",
+      "status": "submitted",
+      "verified": true,
+      "points": 10,
+      "code_changes": [
+        {
+          "filename": "backend/app/modules/ml_budget.py",
+          "changes": [
+            {
+              "added": [
+                "        category = clf.predict([text])[0]"
+              ],
+              "removed": [
+                "        category = \"groceries\""
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\n  \"BUG2\": \"true\"\n}",
+      "llm_verified": true,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "sdda",
+      "bug_id": 3,
+      "domain": "finance",
+      "commit_hash": "10d0aca02efc2af2c4f32ea4da43aab1f6b5eb43",
+      "commit_message": "fix #3",
+      "submission_time": "2025-11-08T11:08:32.862998",
+      "status": "submitted",
+      "verified": true,
+      "points": 10,
+      "code_changes": [
+        {
+          "filename": "backend/app/modules/credit_score.py",
+          "changes": [
+            {
+              "added": [
+                "    score = clf.predict([[payment_history, credit_utilization, credit_age_years, credit_types_count, recent_inquiries_count]])[0]",
+                "    return int(max(300, min(850, score)))"
+              ],
+              "removed": [
+                "    STATIC_SCORE = 650",
+                "",
+                "    return int(max(300, min(850, STATIC_SCORE)))"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\n  \"BUG3\": \"true\"\n}",
+      "llm_verified": true,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "sdda",
+      "bug_id": 4,
+      "domain": "finance",
+      "commit_hash": "5e277055354f7384527c31559fce1843df0bc565",
+      "commit_message": "fix #4",
+      "submission_time": "2025-11-08T11:10:59.191997",
+      "status": "submitted",
+      "verified": false,
+      "points": 0,
+      "code_changes": [
+        {
+          "filename": "backend/app/modules/new/stock_advisor.py",
+          "changes": [
+            {
+              "added": [
+                "    if loss == 0:",
+                "        return loss + 1e-9",
+                "    rs = gain / (loss)"
+              ],
+              "removed": [
+                "    rs = gain / (loss + 1e-9)"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{\n  \"BUG4\": \"false\"\n}",
+      "llm_verified": false,
+      "verification_method": "llm"
+    }
+  ],
+  "domain": "finance"
+}

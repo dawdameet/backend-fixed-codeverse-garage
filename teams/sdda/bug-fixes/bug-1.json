@@ -1,0 +1,27 @@
+{
+  "team_id": "sdda",
+  "bug_id": 1,
+  "domain": "finance",
+  "commit_hash": "35fe347eae3ce26b38079a717868e0c32e5517bd",
+  "commit_message": "fix #1",
+  "submission_time": "2025-11-08T10:59:48.653644",
+  "status": "submitted",
+  "verified": true,
+  "points": 10,
+  "code_changes": [
+    {
+      "filename": "backend/app/routes/dashboard.py",
+      "changes": [
+        {
+          "added": [],
+          "removed": [
+            "    days = 30  "
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\n  \"BUG1\": \"true\"\n}",
+  "llm_verified": true,
+  "verification_method": "llm"
+}

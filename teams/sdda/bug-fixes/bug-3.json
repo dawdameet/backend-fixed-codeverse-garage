@@ -1,0 +1,32 @@
+{
+  "team_id": "sdda",
+  "bug_id": 3,
+  "domain": "finance",
+  "commit_hash": "10d0aca02efc2af2c4f32ea4da43aab1f6b5eb43",
+  "commit_message": "fix #3",
+  "submission_time": "2025-11-08T11:08:32.862998",
+  "status": "submitted",
+  "verified": true,
+  "points": 10,
+  "code_changes": [
+    {
+      "filename": "backend/app/modules/credit_score.py",
+      "changes": [
+        {
+          "added": [
+            "    score = clf.predict([[payment_history, credit_utilization, credit_age_years, credit_types_count, recent_inquiries_count]])[0]",
+            "    return int(max(300, min(850, score)))"
+          ],
+          "removed": [
+            "    STATIC_SCORE = 650",
+            "",
+            "    return int(max(300, min(850, STATIC_SCORE)))"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\n  \"BUG3\": \"true\"\n}",
+  "llm_verified": true,
+  "verification_method": "llm"
+}

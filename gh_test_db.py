@@ -12,7 +12,7 @@ import re
 import subprocess
 import requests
 import tempfile
-from pymongo import MongoClient
+from pymongo import MongoClient, UpdateOne
 from pymongo.errors import ConnectionFailure, PyMongoError
 
 app = Flask(__name__)
@@ -23,7 +23,6 @@ LLM_BACKEND_URL = "http://localhost:8000/verify"
 MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb+srv://manav25gohil:NBOFnjuXZ8XWPVHw@cluster0.7du3n.mongodb.net/")
 MONGODB_DATABASE = os.environ.get("MONGODB_DATABASE", "hackathon_tracker")
 MONGODB_COLLECTION = os.environ.get("MONGODB_COLLECTION", "leaderboard")
-AUTO_REOPEN_ISSUES = True # Set to "true" to enable auto-reopen
 
 class HackathonTracker:
     def __init__(self):
@@ -65,12 +64,6 @@ class HackathonTracker:
 
     def reopen_bug_issue(self, bug_id, full_repo_name, reason="verification failed"):
         """Reopen a bug issue when verification fails"""
-        # Check if auto-reopen is enabled
-        if not AUTO_REOPEN_ISSUES:
-            print(f"[INFO] Auto-reopen disabled. Bug #{bug_id} verification failed but issue not reopened.")
-            print(f"[INFO] To enable auto-reopen, set environment variable: AUTO_REOPEN_ISSUES=true")
-            return False
-
         try:
             print(f"[INFO] Searching for Bug #{bug_id} in {full_repo_name}...")
 
@@ -157,22 +150,9 @@ class HackathonTracker:
             return False
 
     def get_bug_points(self, domain, bug_id):
-        """Fetch bug points from domain bugs.json file"""
-        try:
-            bugs_file = f"domains/{domain}/bugs.json"
-            if os.path.exists(bugs_file):
-                with open(bugs_file, 'r', encoding='utf-8') as f:
-                    bugs_data = json.load(f)
-                    for bug in bugs_data:
-                        if bug['id'] == bug_id:
-                            return bug.get('points', 10)
-            
-            # If bug not found in domain file, assign default points
-            print(f"[WARNING] Bug #{bug_id} not found in {bugs_file}, assigning default 10 points")
-            return 10
-        except Exception as e:
-            print(f"[ERROR] Failed to get points for Bug #{bug_id} from {bugs_file}: {e}, assigning default 10 points")
-            return 10
+        """Return fixed 10 points for each bug"""
+        # All bugs are worth 10 points regardless of domain or difficulty
+        return 10
 
     def extract_code_changes(self, full_repo_name, commit_hash):
         """Extract code changes from a commit using git"""
@@ -371,8 +351,11 @@ END "BUG{bug_id}"
         with open(f"{team_dir}/bug-fixes/bug-{bug_id}.json", "w", encoding="utf-8") as f:
             json.dump(submission, f, indent=2)
 
-        # Update manual-review collection in MongoDB
-        self.update_manual_review_collection(team_id, bug_id, submission)
+        # Update manual-review collection in MongoDB only if verified
+        if llm_verified:
+            self.update_manual_review_collection(team_id, bug_id, submission)
+        else:
+            print(f"[INFO] Bug #{bug_id} not verified, skipping manual-review upload")
 
         # Update progress (this will trigger MongoDB update if bug was verified)
         self.update_progress(team_id)
@@ -452,24 +435,42 @@ END "BUG{bug_id}"
         print(f"[LEADERBOARD] {len(leaderboard)} team(s) updated")
 
     def update_mongodb_leaderboard(self, leaderboard):
-        """Update leaderboard in MongoDB"""
+        """Update leaderboard in MongoDB using upsert (safer for server downtime)"""
         if self.leaderboard_collection is None:
             print("[WARNING] MongoDB not available, skipping database update")
             return
 
         try:
-            # Clear existing leaderboard and insert new data
-            self.leaderboard_collection.delete_many({})
+            if not leaderboard:
+                print("[INFO] Leaderboard is empty, skipping MongoDB update")
+                return
 
-            if leaderboard:
-                # Add timestamp to each entry
-                for entry in leaderboard:
-                    entry["updated_at"] = datetime.now()
+            # Use bulk upsert operations instead of delete_many
+            bulk_operations = []
+            team_ids_in_update = set()
 
-                self.leaderboard_collection.insert_many(leaderboard)
-                print(f"[✓] MongoDB leaderboard updated: {len(leaderboard)} entries")
+            for entry in leaderboard:
+                team_id = entry.get("team_id")
+                if not team_id:
+                    continue
+
+                team_ids_in_update.add(team_id)
+                entry["updated_at"] = datetime.now()
+
+                # Upsert each team's leaderboard entry
+                bulk_operations.append(
+                    UpdateOne(
+                        {"team_id": team_id},
+                        {"$set": entry},
+                        upsert=True
+                    )
+                )
+
+            if bulk_operations:
+                self.leaderboard_collection.bulk_write(bulk_operations, ordered=False)
+                print(f"[✓] MongoDB leaderboard updated: {len(bulk_operations)} entries")
             else:
-                print("[INFO] Leaderboard is empty, cleared MongoDB collection")
+                print("[WARNING] No valid leaderboard entries to update")
 
         except PyMongoError as e:
             print(f"[ERROR] Failed to update MongoDB leaderboard: {e}")
@@ -617,8 +618,11 @@ def manually_verify_bug(team_id, bug_id):
             with open(bug_file, 'w', encoding='utf-8') as f:
                 json.dump(submission, f, indent=2)
 
-            # Update manual-review collection in MongoDB
-            tracker.update_manual_review_collection(team_id, bug_id, submission)
+            # Update manual-review collection in MongoDB only if verified
+            if llm_verified:
+                tracker.update_manual_review_collection(team_id, bug_id, submission)
+            else:
+                print(f"[INFO] Bug #{bug_id} re-verification failed, skipping manual-review upload")
 
             # Update progress (will trigger MongoDB update)
             tracker.update_progress(team_id)

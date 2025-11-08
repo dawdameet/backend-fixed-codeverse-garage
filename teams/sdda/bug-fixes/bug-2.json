@@ -1,0 +1,29 @@
+{
+  "team_id": "sdda",
+  "bug_id": 2,
+  "domain": "finance",
+  "commit_hash": "5bed523151b5c26d08a1e236a2eec93d2db1d25b",
+  "commit_message": "fix #2",
+  "submission_time": "2025-11-08T11:04:18.812209",
+  "status": "submitted",
+  "verified": true,
+  "points": 10,
+  "code_changes": [
+    {
+      "filename": "backend/app/modules/ml_budget.py",
+      "changes": [
+        {
+          "added": [
+            "        category = clf.predict([text])[0]"
+          ],
+          "removed": [
+            "        category = \"groceries\""
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\n  \"BUG2\": \"true\"\n}",
+  "llm_verified": true,
+  "verification_method": "llm"
+}

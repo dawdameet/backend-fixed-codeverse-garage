@@ -1,9 +1,9 @@
 {
   "team_id": "zimaad",
-  "total_submissions": 9,
-  "verified_submissions": 3,
-  "total_points": 70,
-  "last_submission": "2025-11-08T09:26:52.039004",
+  "total_submissions": 11,
+  "verified_submissions": 2,
+  "total_points": 60,
+  "last_submission": "2025-11-08T10:12:42.598723",
   "submissions": [
     {
       "team_id": "zimaad",
@@ -83,42 +83,58 @@
       "team_id": "zimaad",
       "bug_id": 1,
       "domain": "fintech",
-      "commit_hash": "b5058ab3dc4226defd3f88fc1f0144fbca8c502e",
+      "commit_hash": "e4f606bba1005f68455bc5a48b1569980d6411d7",
       "commit_message": "fix #1",
-      "submission_time": "2025-11-08T09:02:26.457362",
+      "submission_time": "2025-11-08T10:12:42.598723",
       "status": "submitted",
-      "verified": true,
-      "points": 10,
+      "verified": false,
+      "points": 0,
       "code_changes": [
-        {
-          "filename": "fintechScript.py",
-          "changes": [
-            {
-              "added": [
-                "repo = \"Zimaad/team-zimaad-fintech\""
-              ],
-              "removed": [
-                "repo = \"DJSCE-codeAI/fintech\""
-              ]
-            }
-          ]
-        },
         {
           "filename": "market_sentiment/sentiment_analyzer.py",
           "changes": [
             {
               "added": [
-                "        if compound >= 0.05:"
+                "        if summary['avg_vader_compound'] > 0.5:"
               ],
               "removed": [
-                "        if compound >= 0.5:"
+                "        if summary['avg_vader_compound'] > 0.05:"
               ]
             }
           ]
         }
       ],
-      "llm_verification": "{ \"BUG1\": \"true\" }",
-      "llm_verified": true,
+      "llm_verification": "{ \"BUG1\": \"false\" }",
+      "llm_verified": false,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "zimaad",
+      "bug_id": 17,
+      "domain": "fintech",
+      "commit_hash": "8402412b2262e9364119f7990ce222f88cea53be",
+      "commit_message": "fix #17",
+      "submission_time": "2025-11-08T09:39:52.704406",
+      "status": "submitted",
+      "verified": false,
+      "points": 0,
+      "code_changes": [
+        {
+          "filename": "cpp_services/pair_trading/backtest.cpp",
+          "changes": [
+            {
+              "added": [
+                "            double tradePnl = (exitPrice-entryPrice) / entryPrice; // PnL as %"
+              ],
+              "removed": [
+                "            double tradePnl = ( entryPrice - exitPrice) / entryPrice; // PnL as %"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{ \"BUG17\": \"false\" }",
+      "llm_verified": false,
       "verification_method": "llm"
     },
     {
@@ -247,6 +263,39 @@
         }
       ],
       "llm_verification": "{\n  \"BUG4\": \"false\"\n}",
+      "llm_verified": false,
+      "verification_method": "llm"
+    },
+    {
+      "team_id": "zimaad",
+      "bug_id": 13,
+      "domain": "fintech",
+      "commit_hash": "08760e2248394b184ad5328d95cfb37807f6290a",
+      "commit_message": "fix #13",
+      "submission_time": "2025-11-08T09:38:19.623961",
+      "status": "submitted",
+      "verified": false,
+      "points": 0,
+      "code_changes": [
+        {
+          "filename": "portfolio/optimizer.py",
+          "changes": [
+            {
+              "added": [
+                "     "
+              ],
+              "removed": [
+                "        def negative_sharpe(weights):",
+                "            return -self.calculate_portfolio_metrics(weights)[2]",
+                "        ",
+                "        def portfolio_volatility(weights):",
+                "            return self.calculate_portfolio_metrics(weights)[1]"
+              ]
+            }
+          ]
+        }
+      ],
+      "llm_verification": "{ \"BUG13\": \"false\" }",
       "llm_verified": false,
       "verification_method": "llm"
     },

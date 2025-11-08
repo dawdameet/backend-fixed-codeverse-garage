@@ -1,0 +1,31 @@
+{
+  "team_id": "sdda",
+  "bug_id": 4,
+  "domain": "finance",
+  "commit_hash": "5e277055354f7384527c31559fce1843df0bc565",
+  "commit_message": "fix #4",
+  "submission_time": "2025-11-08T11:10:59.191997",
+  "status": "submitted",
+  "verified": false,
+  "points": 0,
+  "code_changes": [
+    {
+      "filename": "backend/app/modules/new/stock_advisor.py",
+      "changes": [
+        {
+          "added": [
+            "    if loss == 0:",
+            "        return loss + 1e-9",
+            "    rs = gain / (loss)"
+          ],
+          "removed": [
+            "    rs = gain / (loss + 1e-9)"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\n  \"BUG4\": \"false\"\n}",
+  "llm_verified": false,
+  "verification_method": "llm"
+}
