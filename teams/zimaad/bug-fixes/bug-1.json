@@ -1,0 +1,42 @@
+{
+  "team_id": "zimaad",
+  "bug_id": 1,
+  "domain": "fintech",
+  "commit_hash": "b5058ab3dc4226defd3f88fc1f0144fbca8c502e",
+  "commit_message": "fix #1",
+  "submission_time": "2025-11-08T09:02:26.457362",
+  "status": "submitted",
+  "verified": true,
+  "points": 10,
+  "code_changes": [
+    {
+      "filename": "fintechScript.py",
+      "changes": [
+        {
+          "added": [
+            "repo = \"Zimaad/team-zimaad-fintech\""
+          ],
+          "removed": [
+            "repo = \"DJSCE-codeAI/fintech\""
+          ]
+        }
+      ]
+    },
+    {
+      "filename": "market_sentiment/sentiment_analyzer.py",
+      "changes": [
+        {
+          "added": [
+            "        if compound >= 0.05:"
+          ],
+          "removed": [
+            "        if compound >= 0.5:"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{ \"BUG1\": \"true\" }",
+  "llm_verified": true,
+  "verification_method": "llm"
+}

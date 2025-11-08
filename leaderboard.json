@@ -1,26 +1,10 @@
 [
   {
-    "team_id": "bugbuster",
-    "bugs_solved": 2,
-    "total_points": 15,
-    "last_submission": "2025-11-06T23:43:54.802424",
-    "domain": "finance",
-    "rank": 1
-  },
-  {
-    "team_id": "blooms",
+    "team_id": "zimaad",
     "bugs_solved": 3,
-    "total_points": 15,
-    "last_submission": "2025-11-07T00:50:27.058625",
-    "domain": "healthcare",
-    "rank": 2
-  },
-  {
-    "team_id": "finbugs",
-    "bugs_solved": 2,
-    "total_points": 15,
-    "last_submission": "2025-11-07T18:28:22.600786",
+    "total_points": 70,
+    "last_submission": "2025-11-08T09:26:52.039004",
     "domain": "fintech",
-    "rank": 3
+    "rank": 1
   }
 ]

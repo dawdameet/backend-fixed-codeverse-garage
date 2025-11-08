@@ -1,0 +1,29 @@
+{
+  "team_id": "zimaad",
+  "bug_id": 7,
+  "domain": "fintech",
+  "commit_hash": "18ef4885ed5e9e573f9ca9b922d2c328e751d556",
+  "commit_message": "fix #7",
+  "submission_time": "2025-11-08T09:21:09.588735",
+  "status": "submitted",
+  "verified": true,
+  "points": 30,
+  "code_changes": [
+    {
+      "filename": "portfolio/optimizer.py",
+      "changes": [
+        {
+          "added": [
+            "            weights /= np.sum(weights)"
+          ],
+          "removed": [
+            "            weights /= n_assets"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\n  \"BUG7\": \"true\"\n}",
+  "llm_verified": true,
+  "verification_method": "llm"
+}

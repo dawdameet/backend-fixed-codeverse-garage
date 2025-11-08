@@ -1,0 +1,29 @@
+{
+  "team_id": "zimaad",
+  "bug_id": 8,
+  "domain": "fintech",
+  "commit_hash": "72b82b201cd28eb1c8de9d47d7c40ccbb87e41b5",
+  "commit_message": "fix #8",
+  "submission_time": "2025-11-08T09:22:39.217860",
+  "status": "submitted",
+  "verified": false,
+  "points": 0,
+  "code_changes": [
+    {
+      "filename": "portfolio/optimizer.py",
+      "changes": [
+        {
+          "added": [
+            "            np.dot(weights.T,np.dot(self.returns.cov()*252, weights))"
+          ],
+          "removed": [
+            "            np.dot(weights.T,np.dot(self.returns.cov(), weights))"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{ \"BUG8\": \"false\" }",
+  "llm_verified": false,
+  "verification_method": "llm"
+}

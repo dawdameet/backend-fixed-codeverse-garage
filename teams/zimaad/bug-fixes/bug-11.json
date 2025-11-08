@@ -1,0 +1,45 @@
+{
+  "team_id": "zimaad",
+  "bug_id": 11,
+  "domain": "fintech",
+  "commit_hash": "f8aa097d5ebca5ba34c6f0945e2d8333a3a3b201",
+  "commit_message": "#fix 11",
+  "submission_time": "2025-11-08T09:26:52.039004",
+  "status": "submitted",
+  "verified": false,
+  "points": 0,
+  "code_changes": [
+    {
+      "filename": "portfolio/optimizer.py",
+      "changes": [
+        {
+          "added": [
+            ""
+          ],
+          "removed": [
+            "        # Sharpe ratio",
+            "        sharpe_ratio = (portfolio_return - self.risk_free_rate) / portfolio_volatility",
+            "        ",
+            "        return portfolio_return, portfolio_volatility, sharpe_ratio",
+            "    ",
+            "    def optimize_portfolio(self, target='sharpe', min_weight=0.01, max_weight=0.4):",
+            "        \"\"\"",
+            "        Optimize portfolio using Modern Portfolio Theory",
+            "        ",
+            "        Args:",
+            "            target: 'sharpe' (max Sharpe) or 'min_volatility'",
+            "            min_weight: Minimum weight per asset",
+            "            max_weight: Maximum weight per asset",
+            "        \"\"\"",
+            "        print(f\"\\nOptimizing portfolio (Target: {target})...\")",
+            "        ",
+            "        n_assets = len(self.tickers)"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{\n  \"BUG11\": \"false\"\n}",
+  "llm_verified": false,
+  "verification_method": "llm"
+}

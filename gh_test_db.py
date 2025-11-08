@@ -23,6 +23,7 @@ LLM_BACKEND_URL = "http://localhost:8000/verify"
 MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb+srv://manav25gohil:NBOFnjuXZ8XWPVHw@cluster0.7du3n.mongodb.net/")
 MONGODB_DATABASE = os.environ.get("MONGODB_DATABASE", "hackathon_tracker")
 MONGODB_COLLECTION = os.environ.get("MONGODB_COLLECTION", "leaderboard")
+AUTO_REOPEN_ISSUES = True # Set to "true" to enable auto-reopen
 
 class HackathonTracker:
     def __init__(self):
@@ -37,18 +38,22 @@ class HackathonTracker:
             self.mongo_client.admin.command('ping')
             self.db = self.mongo_client[MONGODB_DATABASE]
             self.leaderboard_collection = self.db[MONGODB_COLLECTION]
+            self.manual_review_collection = self.db["manual-review"]
             print(f"[✓] MongoDB connected: {MONGODB_DATABASE}.{MONGODB_COLLECTION}")
+            print(f"[✓] MongoDB manual-review collection initialized")
         except ConnectionFailure as e:
             print(f"[ERROR] MongoDB connection failed: {e}")
             print("[WARNING] Running without MongoDB integration")
             self.mongo_client = None
             self.db = None
             self.leaderboard_collection = None
+            self.manual_review_collection = None
         except Exception as e:
             print(f"[ERROR] Unexpected MongoDB error: {e}")
             self.mongo_client = None
             self.db = None
             self.leaderboard_collection = None
+            self.manual_review_collection = None
 
     def setup_tracking_repo(self):
         """Initialize directory structure and leaderboard"""
@@ -60,7 +65,15 @@ class HackathonTracker:
 
     def reopen_bug_issue(self, bug_id, full_repo_name, reason="verification failed"):
         """Reopen a bug issue when verification fails"""
+        # Check if auto-reopen is enabled
+        if not AUTO_REOPEN_ISSUES:
+            print(f"[INFO] Auto-reopen disabled. Bug #{bug_id} verification failed but issue not reopened.")
+            print(f"[INFO] To enable auto-reopen, set environment variable: AUTO_REOPEN_ISSUES=true")
+            return False
+
         try:
+            print(f"[INFO] Searching for Bug #{bug_id} in {full_repo_name}...")
+
             # Find the issue with the bug label
             result = subprocess.run(
                 [
@@ -71,41 +84,76 @@ class HackathonTracker:
                     "--json", "number,title,state",
                     "--limit", "1"
                 ],
-                capture_output=True, text=True, check=True, timeout=10
+                capture_output=True, text=True, timeout=10
             )
-            
-            issues = json.loads(result.stdout)
-            if not issues:
-                print(f"[WARNING] Bug #{bug_id} not found in repository")
+
+            if result.returncode != 0:
+                print(f"[WARNING] GitHub CLI error (may lack permissions): {result.stderr.strip()}")
+                print(f"[INFO] Skipping auto-reopen for Bug #{bug_id}")
                 return False
-            
+
+            if not result.stdout.strip():
+                print(f"[WARNING] Bug #{bug_id} not found in repository {full_repo_name}")
+                return False
+
+            try:
+                issues = json.loads(result.stdout)
+            except json.JSONDecodeError as e:
+                print(f"[WARNING] Failed to parse GitHub response: {e}")
+                return False
+
+            if not issues:
+                print(f"[WARNING] No issue found with label bug-{bug_id}")
+                return False
+
             issue = issues[0]
             issue_num = issue["number"]
+            issue_title = issue.get("title", "Unknown")
             issue_state = issue["state"]
-            
+
+            print(f"[INFO] Found Issue #{issue_num}: {issue_title}")
+            print(f"[INFO] Current state: {issue_state}")
+
             if issue_state == "OPEN":
-                print(f"[INFO] Bug #{bug_id} issue is already OPEN")
+                print(f"[INFO] Bug #{bug_id} issue #{issue_num} is already OPEN")
                 return True
-            
+
             # Build comment for reopening
-            comment = f"Bug verification failed. Reopening for another attempt.\\n\\n**Verification Status:** Failed ({reason})\\n**Action:** Issue reopened automatically for retry"
-            
+            comment = f"""Bug verification failed. Reopening for another attempt.
+
+**Verification Status:** Failed ({reason})
+**Action:** Issue reopened automatically for retry"""
+
+            print(f"[INFO] Attempting to reopen issue #{issue_num}...")
+
             # Reopen the issue
-            subprocess.run(
+            reopen_result = subprocess.run(
                 [
                     "gh", "issue", "reopen",
                     str(issue_num),
                     "-R", full_repo_name,
                     "--comment", comment
                 ],
-                capture_output=True, text=True, check=True, timeout=10
+                capture_output=True, text=True, timeout=10
             )
-            
-            print(f"[INFO] Successfully reopened issue #{issue_num} for Bug #{bug_id}")
+
+            if reopen_result.returncode != 0:
+                error_msg = reopen_result.stderr.strip()
+                if "does not have the correct permissions" in error_msg or "permission" in error_msg.lower():
+                    print(f"[WARNING] No permission to reopen issues in {full_repo_name}")
+                    print(f"[INFO] Please manually reopen issue #{issue_num} for Bug #{bug_id}")
+                else:
+                    print(f"[WARNING] Failed to reopen issue #{issue_num}: {error_msg}")
+                return False
+
+            print(f"[✓] Successfully reopened issue #{issue_num} for Bug #{bug_id}")
             return True
-            
+
+        except subprocess.TimeoutExpired:
+            print(f"[WARNING] Timeout while trying to reopen Bug #{bug_id}")
+            return False
         except Exception as e:
-            print(f"[ERROR] Failed to reopen Bug #{bug_id}: {e}")
+            print(f"[WARNING] Unexpected error reopening Bug #{bug_id}: {e}")
             return False
 
     def get_bug_points(self, domain, bug_id):
@@ -323,6 +371,9 @@ END "BUG{bug_id}"
         with open(f"{team_dir}/bug-fixes/bug-{bug_id}.json", "w", encoding="utf-8") as f:
             json.dump(submission, f, indent=2)
 
+        # Update manual-review collection in MongoDB
+        self.update_manual_review_collection(team_id, bug_id, submission)
+
         # Update progress (this will trigger MongoDB update if bug was verified)
         self.update_progress(team_id)
 
@@ -409,21 +460,49 @@ END "BUG{bug_id}"
         try:
             # Clear existing leaderboard and insert new data
             self.leaderboard_collection.delete_many({})
-            
+
             if leaderboard:
                 # Add timestamp to each entry
                 for entry in leaderboard:
                     entry["updated_at"] = datetime.now()
-                
+
                 self.leaderboard_collection.insert_many(leaderboard)
                 print(f"[✓] MongoDB leaderboard updated: {len(leaderboard)} entries")
             else:
                 print("[INFO] Leaderboard is empty, cleared MongoDB collection")
-                
+
         except PyMongoError as e:
             print(f"[ERROR] Failed to update MongoDB leaderboard: {e}")
         except Exception as e:
             print(f"[ERROR] Unexpected error updating MongoDB: {e}")
+
+    def update_manual_review_collection(self, team_id, bug_id, submission_data):
+        """Update manual-review collection in MongoDB with bug submission data"""
+        if self.manual_review_collection is None:
+            print("[WARNING] MongoDB not available, skipping manual-review update")
+            return
+
+        try:
+            # Create a unique identifier for the bug submission
+            document_id = f"{team_id}_bug_{bug_id}"
+
+            # Add timestamp to the submission data
+            submission_data["updated_at"] = datetime.now()
+            submission_data["document_id"] = document_id
+
+            # Upsert the document (update if exists, insert if not)
+            self.manual_review_collection.update_one(
+                {"document_id": document_id},
+                {"$set": submission_data},
+                upsert=True
+            )
+
+            print(f"[✓] MongoDB manual-review updated: {document_id}")
+
+        except PyMongoError as e:
+            print(f"[ERROR] Failed to update MongoDB manual-review: {e}")
+        except Exception as e:
+            print(f"[ERROR] Unexpected error updating manual-review: {e}")
 
 
 tracker = HackathonTracker()
@@ -534,13 +613,16 @@ def manually_verify_bug(team_id, bug_id):
             submission['verified'] = llm_verified
             submission['verification_method'] = method
             submission['points'] = submission.get('points', 0) if llm_verified else 0
-            
+
             with open(bug_file, 'w', encoding='utf-8') as f:
                 json.dump(submission, f, indent=2)
-            
+
+            # Update manual-review collection in MongoDB
+            tracker.update_manual_review_collection(team_id, bug_id, submission)
+
             # Update progress (will trigger MongoDB update)
             tracker.update_progress(team_id)
-            
+
             return jsonify({
                 "verified": llm_verified,
                 "llm_response": llm_response,
@@ -612,4 +694,4 @@ if __name__ == '__main__':
     print("LLM Backend:      http://localhost:8000/verify")
     print(f"MongoDB:          {MONGODB_URI}")
     print("=" * 60)
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)

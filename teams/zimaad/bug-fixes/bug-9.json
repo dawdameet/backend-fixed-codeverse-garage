@@ -1,0 +1,29 @@
+{
+  "team_id": "zimaad",
+  "bug_id": 9,
+  "domain": "fintech",
+  "commit_hash": "b287fc4f4d7300e703b77bc52334687f3df67b98",
+  "commit_message": "fix #9",
+  "submission_time": "2025-11-08T09:24:43.596750",
+  "status": "submitted",
+  "verified": false,
+  "points": 0,
+  "code_changes": [
+    {
+      "filename": "stock_price_predictor/predictor.py",
+      "changes": [
+        {
+          "added": [
+            "            ax.plot(predicted, label='P', linewidth=2, color='red', alpha=0.7)"
+          ],
+          "removed": [
+            "            ax.plot(predicted, label='Predicted', linewidth=2, color='red', alpha=0.7)"
+          ]
+        }
+      ]
+    }
+  ],
+  "llm_verification": "{ \"BUG9\": \"false\" }",
+  "llm_verified": false,
+  "verification_method": "llm"
+}
